@@ -73,8 +73,7 @@ public class ProduktInCart implements Comparable<ProduktInCart>{
 
     @Override
     public int compareTo(ProduktInCart produktInCart) {
-        int lastCmp = nazwa.compareTo(produktInCart.nazwa);
-        return (lastCmp != 0 ? lastCmp : nazwa2.compareTo(produktInCart.nazwa2));
+        return nazwa.compareTo(produktInCart.nazwa);
     }
 
 }
