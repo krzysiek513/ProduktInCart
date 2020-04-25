@@ -26,23 +26,25 @@ public class ProduktInCartTest {
     static final Comparator<ProduktInCart> VAT_ORDER =
             new Comparator<ProduktInCart>() {
                 public int compare(ProduktInCart p1, ProduktInCart p2) {
-                    return String.valueOf(p1.getStawkaVat()).compareTo(String.valueOf(p2.getStawkaVat()));
+                    return (p1.getStawkaVat() < p2.getStawkaVat() ? -1 :
+                            (p1.getStawkaVat() == p2.getStawkaVat() ? 0 : 1));
                 }
             };
-    static final Comparator<ProduktInCart> CENAVAT_ORDER =
+    static final Comparator<ProduktInCart> CENAILO_ORDER =
             new Comparator<ProduktInCart>() {
                 public int compare(ProduktInCart p1, ProduktInCart p2) {
-                    return String.valueOf(p1.getCena() * p1.getStawkaVat()).compareTo(String.valueOf(p2.getStawkaVat() * p2.getCena()));
+                    return ((p1.getIlosc() * p1.getCena())< (p2.getIlosc() * p2.getCena())) ? -1 :
+                            ((p1.getIlosc() * p1.getCena()) == (p2.getIlosc() * p2.getCena()) ? 0 : 1);
                 }
             };
 
     public static void main(String[] args) {
         ProduktInCart jeden = new ProduktInCart("cebuka",3 , 1f, 0.08f);
-        ProduktInCart dwa = new ProduktInCart("Ogórek", 33, 1.1f, 0.04f);
+        ProduktInCart dwa = new ProduktInCart("Ogórek", 33, 13.1f, 0.04f);
         ProduktInCart jeden1 = new ProduktInCart();
         ProduktInCart trzy = new ProduktInCart("Ziemniak", 8, 0.4f , 0.04f);
         ProduktInCart jeden2 = new ProduktInCart();
-        ProduktInCart cztery = new ProduktInCart("Windows 5", 132, 5f);
+        ProduktInCart cztery = new ProduktInCart("Windows 5", 132, 555f);
         ProduktInCart piec = new ProduktInCart("Sony", 4, 8f);
 
         List<ProduktInCart> anotherList = new ArrayList<ProduktInCart>();
@@ -59,21 +61,23 @@ public class ProduktInCartTest {
         anotherList.forEach(System.out::println);
         System.out.println("---------------");
         System.out.println("sortowanie po ilości produktów");
+        System.out.println("---------------");
         Collections.sort(anotherList, ILOSC_ORDER);
         anotherList.forEach(System.out::println);
+        System.out.println("---------------");
+        System.out.println("sortowanie po cenie produktu");
         System.out.println("---------------");
         Collections.sort(anotherList, CENA_ORDER);
         anotherList.forEach(System.out::println);
         System.out.println("---------------");
+        System.out.println("sortowanie po VAT");
+        System.out.println("---------------");
         Collections.sort(anotherList, VAT_ORDER);
         anotherList.forEach(System.out::println);
         System.out.println("---------------");
-        Collections.sort(anotherList, CENAVAT_ORDER);
-        anotherList.forEach(System.out::println);
+        System.out.println("sortowanie po ilości*VAT produktów");
         System.out.println("---------------");
-
-
-        int c = 55;
-        System.out.println(c + " to " + String.valueOf(c));
+        Collections.sort(anotherList, CENAILO_ORDER);
+        anotherList.forEach(System.out::println);
     }
 }
